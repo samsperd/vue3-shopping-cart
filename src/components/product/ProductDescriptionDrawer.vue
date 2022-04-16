@@ -9,7 +9,13 @@
       <div v-if="product" class="product-details">
           <h3 class="text-center">
               {{ product.name }}
+              <sup class="badge" v-if="product_total">
+                  {{ product_total }}
+              </sup>
           </h3>
+          <div class="img">
+              <img :src="product.imgUrl" height="200" width="200" alt="">
+          </div>
           <p class="description">
               {{ product.description }}
           </p>
@@ -17,13 +23,7 @@
               ${{ product.price.toFixed(2) }}
           </h3>
 
-          <div class="cart-total" v-if="product_total" >
-              <h3>In Cart</h3>
-              <h4>{{ product_total }}</h4>
-          </div>
-
           <div class="button-container">
-              <button @click="removeFromCart()" class="remove">remove</button>
               <button @click="addToCart()" class="add">add</button>
           </div>
       </div>
@@ -38,9 +38,6 @@ export default {
         addToCart() {
             this.$store.commit('addToCart', this.product)
         },
-        removeFromCart() {
-            this.$store.commit('removeFromCart', this.product)
-        }
     },
     computed: {
         product_total() {
@@ -98,7 +95,13 @@ export default {
             background-color: lightgray;
         }
     }
-
+    .badge {
+        background-color: red;
+        padding: .35rem;
+        font-size: .75rem;
+        color: white;
+        border-radius: 10px;
+    }
     .product-details {
         display: flex;
         justify-content: center;
@@ -109,9 +112,13 @@ export default {
             line-height: 1.5rem;
         }
 
+        div.img {
+            justify-content: center;
+        }
+
         .button-container {
             button {
-                width: 150px;
+                width: 70%;
                 border: none;
                 padding: 10px;
                 border-radius: 5px;
@@ -120,7 +127,7 @@ export default {
             }
         }
     }
-
+    
     @media (min-width: 500px) {
         .drawer {
             width: 450px;

@@ -1,4 +1,7 @@
 # shopping-cart
+```
+This is a shopping cart made with Vue, Vuex, Vue-router and Sass.
+```
 
 ## Project setup
 ```

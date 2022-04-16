@@ -1,13 +1,22 @@
 <template>
   <div id="nav">
     <router-link :class="{active: $route.name === 'Home'}" to="/">Home</router-link> |
-    <router-link :class="{active: $route.name === 'Cart'}" to="/cart">Cart</router-link>
+    <router-link :class="{active: $route.name === 'Cart'}" to="/cart">Cart
+      <sup>
+        {{ numberOfItemsInCart }}
+      </sup>
+    </router-link>
   </div>
   <router-view/>
 </template>
 
 <script>
 export default {
+  computed: {
+    numberOfItemsInCart() {
+      return this.$store.getters.cartItemsNumber
+    }
+  },
   mounted() {
     this.$store.commit('updateCartFromLocalStorage')
   }

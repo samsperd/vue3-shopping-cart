@@ -1,12 +1,24 @@
 <template>
-  <div class="cart-item-card">
-        <div class="header">
-            <h3>{{ product.name }}</h3>
-            <h4>In Cart: {{ product.quantity }}</h4>
-            <h4>Total Cost: {{ item_cost.toFixed(2) }}</h4>
-        </div>
-        <p>{{ description }}</p>
-  </div>
+    <tr>
+              <td>
+                  {{ product.name }}
+              </td>
+              <td>
+                  <img :src="product.imgUrl" height="100" width="100" alt="">
+              </td>
+              <td>
+                  <button @click="removeFromCart()" class="remove">-</button>
+              </td>
+              <td>
+                  {{ product.quantity }}
+              </td>
+              <td>
+                <button @click="addToCart()" class="add">+</button>
+              </td>
+              <td>
+                  {{ item_cost.toFixed(2) }}
+              </td>
+    </tr>
 </template>
 
 <script>
@@ -14,12 +26,18 @@ export default {
     name: 'CardItemCard',
     props: ['product'],
     computed: {
-        description() {
-            return this.product.description.substring(0, 120)
-        },
         item_cost() {
             return this.product.price * this.product.quantity
         }
+    },
+    methods: {
+        addToCart() {
+            this.$store.commit('addToCart', this.product)
+        },
+        removeFromCart() {
+            this.$store.commit('removeFromCart', this.product)
+        }
+
     }
 }
 </script>
@@ -29,7 +47,7 @@ export default {
         width: 90%;
         margin: 5%;
         background-color: white;
-        box-shadow: 0 0 5px gray;
+        box-shadow: 0 0 4px gray;
         border-radius: 5px;
         padding: 10px;
         text-align: left;

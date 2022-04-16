@@ -3,7 +3,13 @@
       <div class="card-image-box">
           <img class="card-image" :src="product.imgUrl" alt="Item Image" srcset="">
       </div>
-      <h3>{{ product.name }}</h3>
+      
+      <h3>{{ product.name }}
+            <sup class="badge" v-if="cartQuantity(product)">
+                {{ cartQuantity(product) }}
+            </sup>
+
+      </h3>
 
       <h5 class="price">Price: ${{ product.price.toFixed(2) }}</h5>
       <p class="description"> Description: {{ description }} </p>
@@ -19,6 +25,11 @@ export default {
     computed: {
         description() {
             return this.product.description.substring(0, 150)
+        }
+    },
+    methods: {
+        cartQuantity(product) {
+            return this.$store.getters.productQuantity(product)
         }
     }
 }
@@ -54,7 +65,7 @@ export default {
     }
     button.view-product-button {
         padding: 10px;
-        background-color: rgb(79, 190, 187);
+        background-color: rgb(92, 209, 108);
         border: none;
         color: white;
         font-weight: bold;
